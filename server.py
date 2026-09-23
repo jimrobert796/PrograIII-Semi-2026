@@ -3,6 +3,7 @@ from urllib import parse
 from urllib.parse import urlparse, parse_qs
 import crud_clientes
 
+
 import json
 
 port = 3000
@@ -26,13 +27,16 @@ class miServidor(SimpleHTTPRequestHandler):
         urlParse = urlparse(self.path)
         qs = parse_qs(urlParse.query)
        
-        if urlParse.path == "/saludo":
-            saludo = qs["nombre"][0] + " bienvenido a Python"
-            
+        if urlParse.path == "/clientes":
+            #saludo = qs["nombre"][0] + " bienvenido a Python"    
+            buscar = qs.get("buscar", [""])[0]
+            datos = crudClientes.consultar("")
+        
+        
             self.send_response(200)
             self.send_header("Content-type","text/html")
             self.end_headers()
-            self.wfile.write(saludo.encode("utf-8"))
+            self.wfile.write(json.dumps(datos).encode("utf-8"))
 
         if self.path == "/":
             self.path = "/index.html"
