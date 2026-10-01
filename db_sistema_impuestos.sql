@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-10-2026 a las 02:06:54
+-- Tiempo de generación: 01-10-2026 a las 02:20:22
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -42,11 +42,11 @@ CREATE TABLE `actividades_economicas` (
 --
 
 INSERT INTO `actividades_economicas` (`idActividad`, `idCliente`, `codigo`, `desde`, `hasta`, `balance`, `precio`) VALUES
-(18, 3, '11081', '2025-01-01', '2026-01-01', 550.00, 4.50),
-(15, 3, '11081', '2022-01-01', '2023-01-01', 700.00, 2.10),
-(16, 3, '11081', '2023-01-01', '2024-01-01', 545.00, 4.50),
-(17, 3, '11081', '2024-01-01', '2025-01-01', 550.00, 4.50),
-(19, 3, '11081', '2026-01-01', '2027-01-01', 549.99, 4.50);
+(22, 3, '11081', '2023-01-01', '2024-01-01', 545.00, 4.50),
+(23, 3, '11081', '2024-01-01', '2025-01-01', 550.00, 4.50),
+(24, 3, '11081', '2025-01-01', '2026-01-01', 550.00, 4.50),
+(25, 3, '11081', '2026-01-01', '2027-01-01', 550.00, 4.50),
+(21, 3, '11081', '2022-01-01', '2023-01-01', 700.00, 2.10);
 
 -- --------------------------------------------------------
 
@@ -97,7 +97,7 @@ ALTER TABLE `clientes`
 -- AUTO_INCREMENT de la tabla `actividades_economicas`
 --
 ALTER TABLE `actividades_economicas`
-  MODIFY `idActividad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `idActividad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `clientes`
