@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-10-2026 a las 02:03:19
+-- Tiempo de generación: 01-10-2026 a las 02:06:54
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -48,6 +48,30 @@ INSERT INTO `actividades_economicas` (`idActividad`, `idCliente`, `codigo`, `des
 (17, 3, '11081', '2024-01-01', '2025-01-01', 550.00, 4.50),
 (19, 3, '11081', '2026-01-01', '2027-01-01', 549.99, 4.50);
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `clientes`
+--
+
+CREATE TABLE `clientes` (
+  `idCliente` int(10) NOT NULL,
+  `codigo` char(10) NOT NULL,
+  `nombre` char(100) NOT NULL,
+  `direccion` char(150) NOT NULL,
+  `telefono` char(10) NOT NULL,
+  `email` char(150) NOT NULL,
+  `tipo` char(10) NOT NULL DEFAULT 'particular'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `clientes`
+--
+
+INSERT INTO `clientes` (`idCliente`, `codigo`, `nombre`, `direccion`, `telefono`, `email`, `tipo`) VALUES
+(3, '1234', 'Empresa prueba', 'Usulutan', '1234-1234', 'empresa270@outlook.com', 'empresa'),
+(2, '1231', 'Jimmy', 'usulutan', '6170-0160', 'jimmy@outlook.com', 'particular');
+
 --
 -- Índices para tablas volcadas
 --
@@ -60,6 +84,12 @@ ALTER TABLE `actividades_economicas`
   ADD KEY `idx_cliente_codigo` (`idCliente`,`codigo`);
 
 --
+-- Indices de la tabla `clientes`
+--
+ALTER TABLE `clientes`
+  ADD PRIMARY KEY (`idCliente`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -68,6 +98,12 @@ ALTER TABLE `actividades_economicas`
 --
 ALTER TABLE `actividades_economicas`
   MODIFY `idActividad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT de la tabla `clientes`
+--
+ALTER TABLE `clientes`
+  MODIFY `idCliente` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
