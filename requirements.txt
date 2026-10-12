@@ -1,0 +1,2 @@
+# Framework web
+Django == 6.1.2
