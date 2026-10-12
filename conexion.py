@@ -24,14 +24,11 @@ class Conexion:
         except Error as e:
             print(f"Error al conectar a la base de datos: {e}")
 
-    def consultar(self, sql, datos=None):
-        """datos es opcional: permite consultas parametrizadas (%s)."""
+    def consultar(self, sql):
         try:
             cursor = self.conexion.cursor(dictionary=True)
-            cursor.execute(sql, datos)
-            filas = cursor.fetchall()
-            cursor.close()
-            return filas
+            cursor.execute(sql)
+            return cursor.fetchall()
         except Error as e:
             print(f"Error al consultar la base de datos: {e}")
             return None
@@ -41,8 +38,10 @@ class Conexion:
             cursor = self.conexion.cursor()
             cursor.execute(sql, datos)
             self.conexion.commit()
-            cursor.close()
             return 'ok'
         except Error as e:
             print(f"Error al ejecutar la consulta: {e}")
             return f'Error: {e}'
+    
+        
+    
