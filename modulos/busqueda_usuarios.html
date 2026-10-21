@@ -1,0 +1,119 @@
+<form id="frmConsultarUsuario">
+    <div class="card text-bg-dark mb-3" style="min-width: 600px;">
+        <div class="card-header">
+            <div class="d-flex">
+                Búsqueda de Usuarios
+                <div class="ms-auto">
+                    <button data-form="busqueda_usuarios" type="button" class="btn-close btn-close-white"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th colspan="5">
+                                        <input type="search" placeholder="Buscar por usuario, nombre o teléfono"
+                                            id="txtBuscarUsuario" name="txtBuscarUsuario" class="form-control">
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>Usuario</th>
+                                    <th>Nombre</th>
+                                    <th>Teléfono</th>
+                                    <th>Dirección</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tblUsuarios"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    txtBuscarUsuario.addEventListener('keyup', (e) => {
+        e.preventDefault();
+        obtenerUsuarios(txtBuscarUsuario.value);
+    });
+    obtenerUsuarios();
+
+    async function obtenerUsuarios(buscar = "") {
+        try {
+            let response = await fetch(`/usuarios?buscar=${encodeURIComponent(buscar)}`),
+                datos = await response.json();
+            mostrarDatosUsuarios(datos);
+        } catch (err) {
+            console.error("Error al obtener usuarios:", err);
+            alertify.error("No se pudo obtener la lista de usuarios");
+        }
+    }
+
+    function mostrarDatosUsuarios(datos) {
+        let filas = "";
+        if (!Array.isArray(datos) || datos.length === 0) {
+            filas = `<tr><td colspan="5" class="text-center">Sin resultados</td></tr>`;
+            tblUsuarios.innerHTML = filas;
+            return;
+        }
+        datos.forEach(e => {
+            filas += `
+                <tr onClick='seleccionarUsuarioParaEditar(${JSON.stringify(e)}, event)' style="cursor:pointer;">
+                    <td>${e.usuario}</td>
+                    <td>${e.nombre}</td>
+                    <td>${e.telefono || ''}</td>
+                    <td>${e.direccion || ''}</td>
+                    <td>
+                        <input onClick='eliminarUsuario(${JSON.stringify(e)}, event)' 
+                            type="button" value="DEL" class="btn btn-danger btn-sm"/>
+                    </td>
+                </tr>
+            `;
+        });
+        tblUsuarios.innerHTML = filas;
+    }
+
+    function seleccionarUsuarioParaEditar(data, event) {
+        event.preventDefault();
+        if (typeof modificarUsuario === 'function') {
+            modificarUsuario(data, event);
+        } else {
+            console.warn("modificarUsuario no está definida en usuarios.html");
+        }
+    }
+
+    async function eliminarUsuario(data, event) {
+        event.preventDefault();
+        event.stopPropagation();
+        if (!confirm(`¿Seguro de eliminar al usuario: ${data.nombre} (${data.usuario})?`)) return;
+
+        try {
+            let response = await fetch('/usuarios', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    modulo: 'usuario',
+                    accion: 'eliminar',
+                    idUsuario: data.idUsuario,
+                    usuario: data.usuario
+                })
+            });
+            let respuesta = await response.json();
+            if (respuesta.msg !== 'ok') {
+                alert("Error: " + respuesta.msg);
+                return;
+            }
+            alertify.success("Usuario eliminado");
+            obtenerUsuarios(txtBuscarUsuario.value);
+        } catch (err) {
+            console.error(err);
+            alertify.error("Error de conexión con el servidor");
+        }
+    }
+</script>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-10-2026 a las 02:20:22
+-- Tiempo de generación: 21-10-2026 a las 21:48:19
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -72,6 +72,50 @@ INSERT INTO `clientes` (`idCliente`, `codigo`, `nombre`, `direccion`, `telefono`
 (3, '1234', 'Empresa prueba', 'Usulutan', '1234-1234', 'empresa270@outlook.com', 'empresa'),
 (2, '1231', 'Jimmy', 'usulutan', '6170-0160', 'jimmy@outlook.com', 'particular');
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `productos`
+--
+
+CREATE TABLE `productos` (
+  `idProducto` int(11) NOT NULL,
+  `codigo` varchar(50) NOT NULL,
+  `descripcion` varchar(255) NOT NULL,
+  `estado` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `productos`
+--
+
+INSERT INTO `productos` (`idProducto`, `codigo`, `descripcion`, `estado`) VALUES
+(1, '001', 'okeyyy', 'activo');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuarios_usss001925`
+--
+
+CREATE TABLE `usuarios_usss001925` (
+  `idUsuario` int(11) NOT NULL,
+  `usuario` char(35) NOT NULL,
+  `clave` char(35) NOT NULL,
+  `nombre` char(85) NOT NULL,
+  `direccion` char(80) NOT NULL,
+  `telefono` char(9) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `usuarios_usss001925`
+--
+
+INSERT INTO `usuarios_usss001925` (`idUsuario`, `usuario`, `clave`, `nombre`, `direccion`, `telefono`) VALUES
+(1, 'usss001925', 'test', 'jimbo', 'usulutan', '6170-0160'),
+(4, 'prueba', '123', 'fransico', 'san miguel', '1234-1234'),
+(5, 'test', 'asd', 'soy prueba', 'usu', '1234-1234');
+
 --
 -- Índices para tablas volcadas
 --
@@ -90,6 +134,18 @@ ALTER TABLE `clientes`
   ADD PRIMARY KEY (`idCliente`);
 
 --
+-- Indices de la tabla `productos`
+--
+ALTER TABLE `productos`
+  ADD PRIMARY KEY (`idProducto`);
+
+--
+-- Indices de la tabla `usuarios_usss001925`
+--
+ALTER TABLE `usuarios_usss001925`
+  ADD PRIMARY KEY (`idUsuario`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -104,6 +160,18 @@ ALTER TABLE `actividades_economicas`
 --
 ALTER TABLE `clientes`
   MODIFY `idCliente` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `productos`
+--
+ALTER TABLE `productos`
+  MODIFY `idProducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `usuarios_usss001925`
+--
+ALTER TABLE `usuarios_usss001925`
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

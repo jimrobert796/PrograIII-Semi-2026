@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Sistema de Usuarios</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f0f2f5; margin: 0; }
+        .login-container { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 300px; text-align: center; }
+        .login-container h2 { margin-bottom: 20px; color: #333; }
+        .login-container input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .login-container button { width: 100%; padding: 10px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+        .login-container button:hover { background: #0056b3; }
+        #error-msg { color: red; margin-top: 10px; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Acceso al Sistema</h2>
+        <input type="text" id="loginUsuario" placeholder="Usuario">
+        <input type="password" id="loginClave" placeholder="Contraseña">
+        <button onclick="realizarLogin()">Ingresar</button>
+        <div id="error-msg"></div>
+    </div>
+
+    <script>
+        function realizarLogin() {
+            const usuario = $('#loginUsuario').val();
+            const clave = $('#loginClave').val();
+
+            if (!usuario || !clave) {
+                $('#error-msg').text('Por favor complete todos los campos');
+                return;
+            }
+
+            fetch('/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ modulo: 'login', usuario: usuario, clave: clave })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.msg === 'ok') {
+                    window.location.href = '/index.html';
+                } else {
+                    $('#error-msg').text('Usuario o clave incorrectos');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                $('#error-msg').text('Error de conexión con el servidor');
+            });
+        }
+    </script>
+</body>
+</html>
